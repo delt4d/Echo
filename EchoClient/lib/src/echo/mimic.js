@@ -45,19 +45,22 @@ export class EchoMimic
         return new Promise(r => setTimeout(r, time));
     }
 
-    async executeAsync(json) {
-        const data = EchoData.fromJson(json);
-        
+    /**
+     * 
+     * @param {EchoData} echoData
+     * @returns {Promise<void>}
+     */
+    async executeAsync(echoData) {
         // wait to execute
-        await EchoMimic.waitAsync(data.timeElapsed);
+        await EchoMimic.waitAsync(echoData.timeElapsed);
 
-        switch(data.type) {
+        switch(echoData.type) {
             case EchoTypes.pageChanges: {
                 const policy = trustedTypes.createPolicy('echo', {
                     createHTML: (input) => input
                 });
 
-                const html = policy.createHTML(data.content);
+                const html = policy.createHTML(echoData.content);
 
                 this.#doc.open();
                 this.#doc.writeln(html);
@@ -66,7 +69,7 @@ export class EchoMimic
             }
 
             case EchoTypes.mouseMove: {
-                const { clientX, clientY } = JSON.parse(data.content);
+                const { clientX, clientY } = JSON.parse(echoData.content);
                 const ev = new MouseEvent("mousemove", {
                     bubbles: true,
                     clientX,
@@ -81,7 +84,7 @@ export class EchoMimic
             }
 
             case EchoTypes.pageResize: {
-                const { width, height } = JSON.parse(data.content);
+                const { width, height } = JSON.parse(echoData.content);
             
                 this.#iframe.style.width = `${width}px`;
                 this.#iframe.style.height = `${height}px`;
@@ -90,14 +93,14 @@ export class EchoMimic
             }
 
             case EchoTypes.input: {
-                const { xpath, value } = JSON.parse(data.content);
+                const { xpath, value } = JSON.parse(echoData.content);
                 const el = Handler.lookupElementByXPath(xpath, this.#doc);
                 if (el) el.value = value;
                 break;
             }
 
             case EchoTypes.scroll: {
-                const { scrollX, scrollY } = JSON.parse(data.content);
+                const { scrollX, scrollY } = JSON.parse(echoData.content);
                 this.#win.scrollTo(scrollX, scrollY);
                 break;
             }

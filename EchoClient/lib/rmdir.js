@@ -3,6 +3,10 @@ import fs from "fs";
 
 process.argv
     .slice(2)
-    .map((path) => fs.rmdirSync(path, { recursive: true })); 
+    .map((path) => {
+        if (fs.existsSync(path)) {
+            fs.rmdirSync(path, {recursive: true});
+        }
+    }); 
 
 process.exit(0);
