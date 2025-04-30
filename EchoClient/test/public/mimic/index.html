@@ -79,7 +79,7 @@
 
         const previousZoom = Number(localStorage.getItem("zoom"));
         const currentIframeZoom = reactive(Number.isNaN(previousZoom) ? 90 : previousZoom, newZoom => {
-            document.getElementById("echo-frame").style.zoom = `${newZoom}%`;
+            document.getElementById("echo-container").style.zoom = `${newZoom}%`;
             const zoomRange = document.getElementById("zoom-range");
             if (zoomRange) zoomRange.value = newZoom;
         });
