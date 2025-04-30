@@ -1,17 +1,20 @@
 {
-  "name": "echo",
+  "name": "echoclient",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "prebuild": "node rmdir dist",
-    "build": "rollup -c"
+    "start": "node main.js",
+    "dev": "nodemon main.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
   "devDependencies": {
-    "rollup": "^4.40.1"
+    "nodemon": "^3.1.10"
   }
 }

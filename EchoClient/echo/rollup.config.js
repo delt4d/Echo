@@ -1,9 +1,9 @@
 export default {
   input: 'src/index.js',
   output: {
-    file: 'dist/echo.js',
+    file: 'dist/echo/index.js',
     format: 'umd',
-    name: 'Echo',
+    name: 'echo',
   }
 };
   

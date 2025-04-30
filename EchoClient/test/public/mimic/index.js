@@ -1,4 +1,4 @@
-const { EchoMimic, EchoData } = Echo;
+const { EchoMimic, EchoData } = echo;
 
 const connection = new signalR.HubConnectionBuilder()
     .withUrl("http://localhost:5063/hub")

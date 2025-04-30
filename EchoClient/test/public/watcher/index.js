@@ -1,4 +1,4 @@
-const { EchoRecorder } = Echo;
+const { EchoRecorder } = echo;
 
 const echoRecorder = new EchoRecorder();
 const connection = new signalR.HubConnectionBuilder()
