@@ -1,0 +1,7 @@
+﻿<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Echo" type="CompoundRunConfigurationType">
+    <toRun name="EchoServer: http" type="LaunchSettings" />
+    <toRun name="EchoClient: http" type="NodeJSConfigurationType" />
+    <method v="2" />
+  </configuration>
+</component>
