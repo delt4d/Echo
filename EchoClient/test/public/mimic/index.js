@@ -24,14 +24,14 @@ async function start() {
             if (processing && !ignoreProcessing) return;
             processing = true;
             
-            const data = queue.shift();
+            const item = queue.shift();
             
-            if (!data) {
+            if (!item) {
                 processing = false;
                 return;
             }
 
-            await echoMimic.executeAsync(data);
+            await echoMimic.executeAsync(EchoData.fromJson(item));
 
             return await processNext(true);
         }
@@ -46,10 +46,6 @@ async function start() {
                     console.log(err);
                 }
             });
-
-        setTimeout(() => {
-            window.location.href = window.location.href;
-        }, 24000)
     } catch (err) {
         console.log({err});
     }

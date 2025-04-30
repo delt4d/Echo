@@ -4,7 +4,7 @@ const app = express();
 
 app.get('/', (req, res) => res.sendStatus(200));
 app.use(express.static("public"));
-app.use(express.static("../echo/dist"));
+app.use(express.static("../lib/dist"));
 
 app.listen(5500, (err) => {
     if (err) {
