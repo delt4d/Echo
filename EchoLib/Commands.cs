@@ -9,6 +9,36 @@ public interface IEchoCommand
     public Task ExecuteAsync();
 }
 
+public class EchoSaveToStreamCommand() : IEchoCommand
+{
+    private Stream _outStream = Stream.Null;
+    public required EchoData Data { get; set; }
+    public required Stream OutStream { 
+        get => _outStream; 
+        set {
+            if (_outStream.CanWrite)
+                throw new NotSupportedException("The stream does not support writing.");
+
+            _outStream = value;
+        } 
+    }
+
+    public EchoSaveToStreamCommand(EchoData data, Stream outStream) : this() {
+        Data = data;
+        OutStream = outStream;
+    }
+
+    public async Task ExecuteAsync()
+    {
+        var json = JsonConvert.SerializeObject(Data, Formatting.None);
+        var json64 = json.CompressToBase64();
+        var line = json64 + Environment.NewLine;
+        var bytes = Encoding.UTF8.GetBytes(line);
+        await _outStream.WriteAsync(bytes);
+        await _outStream.FlushAsync();
+    }
+}
+
 public class EchoSaveDataToFileCommand() : IEchoCommand
 {
     public required EchoData Data { get; set; }
@@ -29,22 +59,11 @@ public class EchoSaveDataToFileCommand() : IEchoCommand
 
         var filePath = Path.Combine(Directory, Filename);
         var json = JsonConvert.SerializeObject(Data);
-        var json64 = CompressToBase64(json);
+        var json64 = json.CompressToBase64();
         var line = json64 + Environment.NewLine;
 
         await File.AppendAllTextAsync(filePath, line, Encoding.UTF8);
 
         Console.WriteLine($"=> {filePath}" + Environment.NewLine);
-    }
-    
-    private static string CompressToBase64(string input)
-    {
-        var bytes = Encoding.UTF8.GetBytes(input);
-        using var output = new MemoryStream();
-        using (var gzip = new GZipStream(output, CompressionLevel.Optimal))
-        {
-            gzip.Write(bytes, 0, bytes.Length);
-        }
-        return Convert.ToBase64String(output.ToArray());
     }
 }
