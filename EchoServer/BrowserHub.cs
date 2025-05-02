@@ -9,13 +9,17 @@ public class BrowserHub : Hub
 {
     public async Task ReceiveStream(ChannelReader<EchoData> stream)
     {
+        File.Delete(Path.Join(Directory.GetCurrentDirectory(), "Test.txt"));
+        
         await EchoRecorder.HandleChannelReader(stream, 
             (data) => new EchoSaveDataToFileCommand
-            {
-                Data = data,
-                Directory = Path.GetTempPath(),
-                Filename = $"User{Context.ConnectionId}.txt"
-            });
+                {
+                    Data = data,
+                    Directory = Directory.GetCurrentDirectory(),
+                    Filename = "Test.txt"
+                    // Directory = Path.GetTempPath(),
+                    // Filename = $"User{Context.ConnectionId}.txt"
+                });
     }
 
     public IAsyncEnumerable<EchoData> SendStream(CancellationToken cancellationToken)

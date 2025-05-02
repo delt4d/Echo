@@ -12,6 +12,10 @@ class EchoMimicComponent extends HTMLElement {
     resize(width, height) {
         this.style.width = `${width}px`;
         this.style.height = `${height}px`;
+        this.style.minWidth = `${width}px`;
+        this.style.minHeight = `${height}px`;
+        this.style.maxWidth = `${width}px`;
+        this.style.maxHeight = `${height}px`;
     }
     
     moveCursor(posX, posY) {
@@ -67,12 +71,17 @@ class EchoMimicComponent extends HTMLElement {
         headerTemplate.innerHTML = `
         <header>
             <style>
+                * {
+                    box-sizing: border-box;]
+                    padding: 0;
+                    margin: 0;
+                }
+            
                 main {
                     position: relative;
                     width: 100%;
                     height: 100%;
                     pointer-events: none;
-                    overflow: hidden;
                 }
                 
                 iframe {
@@ -91,7 +100,7 @@ class EchoMimicComponent extends HTMLElement {
                     border-radius: 50%;
                     z-index: 9999;
                     display: none;
-                    transition: transform 0.05s linear;
+                    transition: top 0.05s linear, left 0.05s linear;
                     transform: translate(-50%, -50%);
                 }
             </style>
@@ -100,13 +109,15 @@ class EchoMimicComponent extends HTMLElement {
         const mainTemplate = document.createElement("template");
         mainTemplate.innerHTML = `
             <main>
-                <iframe></iframe>
+                <iframe title="echo-mimic"></iframe>
                 <div class="cursor"></div>
             </main>`;
 
         const shadowRoot = this.attachShadow({ mode: "open" });
         shadowRoot.appendChild(headerTemplate.content);
         shadowRoot.appendChild(mainTemplate.content);
+        
+        this.style.display = "inline-block";
     }
 }
 

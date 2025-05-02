@@ -7,18 +7,20 @@ import {
     ScrollHandler
 } from "./handlers";
 import {EchoData} from "./data";
+import {EchoEventBus} from "./event-bus.js";
 
 export class EchoRecorder {
     #lastTime;
     #eventsQueue = [];
     #handlers = [];
     #canceled = false;
+    #eventBus;
     #tickMs;
 
     /**
      * 
      * @param {object} opt 
-     * @param {bool} opt.useDefaultHandlers
+     * @param {boolean} opt.useDefaultHandlers
      * @param {number} opt.tickMs
      */
     constructor(opt) {
@@ -27,15 +29,15 @@ export class EchoRecorder {
 
         this.#tickMs = opt.tickMs || 1000;
         this.#lastTime = Date.now();
-
+        this.#eventBus = new EchoEventBus();
 
         if (opt.useDefaultHandlers) {
-            this.addHandler(PageChangeHandler);
-            this.addHandler(InputHandler);
-            this.addHandler(MouseMoveHandler);
-            this.addHandler(MouseClickHandler);
-            this.addHandler(PageResizeHandler);
-            this.addHandler(ScrollHandler);
+            this.addHandler(PageChangeHandler)
+                .addHandler(InputHandler)   
+                .addHandler(MouseMoveHandler)   
+                .addHandler(MouseClickHandler)  
+                .addHandler(PageResizeHandler)  
+                .addHandler(ScrollHandler);
         }
     }
 
@@ -57,7 +59,7 @@ export class EchoRecorder {
 
     addHandler(HandlerCls) {
         const onEvent = this.#handleIncomingEvent.bind(this);
-        const handler = new HandlerCls();
+        const handler = new HandlerCls(this.#eventBus);
 
         this.#handlers.push(handler);
 
@@ -65,6 +67,8 @@ export class EchoRecorder {
             handler.setOnEvent(onEvent);
             handler.start();
         }
+        
+        return this;
     }
 
     cancel() {

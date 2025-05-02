@@ -2,27 +2,24 @@ import {Handler} from "./handler";
 import {EchoTypes} from "./types";
 
 export class PageChangeHandler extends Handler {
-    constructor() {
+    /**
+     * 
+     * @param {EchoEventBus} eventBus
+     */
+    constructor(eventBus) {
         const observer = new MutationObserver((a,b) => {
             const clone = document.documentElement.cloneNode(true);
             
-            clone.querySelectorAll('input[type="password"]').forEach(input => (input.value = ""));
-            clone.querySelectorAll('[data-not-secure]').forEach(el => {
-                if ('value' in el) el.value = "";
-                el.textContent = "";
+            clone.querySelectorAll('input[type="password"]').forEach(input => Handler.maskInput(input.value));
+            clone.querySelectorAll('[data-no-record]').forEach(el => {
+                if ('value' in el) {
+                    el.value = Handler.maskInput(el.value);
+                }
             });
             clone.querySelectorAll('script').forEach(script => script.remove());
-            clone.querySelectorAll('*').forEach(el => {
-                [...el.attributes].forEach(attr => {
-                    if (attr.name.startsWith('on')) {
-                        el.removeAttribute(attr.name);
-                    }
-                });
-            });
-
-            const sanitizedContent = clone.outerHTML;
-
-            super._emit(sanitizedContent);
+            
+            super._emit(clone.outerHTML);
+            eventBus?.emit("page-snapshot-rendered");
         });
 
         const targetNode = document.querySelector("html");
@@ -36,31 +33,57 @@ export class PageChangeHandler extends Handler {
         const onStart = () => observer.observe(targetNode, config);
         const onStop = () => observer.disconnect();
 
-        super(EchoTypes.pageChanges, onStart, onStop);
+        super(EchoTypes.pageChanges, onStart, onStop, eventBus);
     }
 }
 
 export class InputHandler extends Handler {
-    constructor() {
+    /**
+     *
+     * @param {EchoEventBus} eventBus
+     */
+    constructor(eventBus) {
+        /** @param {InputEvent} e */
         const onInput = (e) => {
             if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") {
                 const content = {
-                    value: Handler._maskInput(e.target.value),
-                    xpath: Handler._createXPathFromElement(e.target)
+                    value: e.target.type === "password" || "noRecord" in e.target.dataset ? Handler.maskInput(e.target.value) : e.target.value,
+                    xpath: Handler.createXPathFromElement(e.target)
                 };
                 super._emit(content, true);
             }
         };
 
-        const onStart = () => document.addEventListener("input", onInput);
-        const onStop = () => document.removeEventListener("input", onInput);
+        const emitAllInputs = () => {
+            const inputs = document.querySelectorAll("input, textarea");
+            
+            for (const el of inputs) {
+                if (!document.documentElement.contains(el)) continue;
+                
+                const content = {
+                    value: el.type === "password" || "noRecord" in el.dataset ? Handler.maskInput(el.value) : el.value,
+                    xpath: Handler.createXPathFromElement(el)
+                };
+                
+                super._emit(content, true);
+            }
+        };
 
-        super(EchoTypes.input, onStart, onStop);
+        const onStart = () => {
+            document.addEventListener("input", onInput);
+            eventBus?.on("page-snapshot-rendered", emitAllInputs);
+        }
+        const onStop = () => {
+            document.removeEventListener("input", onInput);
+            eventBus?.off("page-snapshot-rendered", emitAllInputs);
+        }
+
+        super(EchoTypes.input, onStart, onStop, eventBus);
     }
 }
 
 export class MouseMoveHandler extends Handler {
-    constructor(throttleMs = 100) {
+    constructor(_, throttleMs = 100) {
         let lastEmitTime = 0;
 
         const onMove = (e) => {
@@ -102,7 +125,7 @@ export class MouseClickHandler extends Handler {
                 button: e.button,
                 x: e.clientX,
                 y: e.clientY,
-                xpath: Handler._createXPathFromElement(e.target)
+                xpath: Handler.createXPathFromElement(e.target)
             };
             super._emit(content, true);
         };
