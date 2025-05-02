@@ -26,31 +26,22 @@
             align-items: center;
         }
 
-        #echo-container {
-            position: relative;
+        #echo {
             height: fit-content;
             box-shadow: 0 12px 64px rgba(0, 0, 0, 0.45);
             border: rgba(255,255,255,.85) 1px solid;
             border-radius: 2px;
-            overflow: hidden;
-        }
-
-        #echo-frame {
-            border: none; 
-            pointer-events: none;
-            position: relative;
-            width: 100%;
-            height: 100%;
         }
     </style>
 </head>
 <body>
     <section>
-        <div id="echo-container">
-            <iframe id="echo-frame"></iframe>
-        </div>
+        <echo-mimic id="echo"></echo-mimic>
     </section>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.js"></script>
+    <script src="/echo/index.js"></script>
+    <script src="./index.js"></script>
     <script>
         const minZoom = 32;
         const maxZoom = 100;
@@ -65,7 +56,7 @@
 
             return {
                 addListener(cb) {
-                    listeners.push(cb);  
+                    listeners.push(cb);
                 },
                 get value() {
                     return currentValue;
@@ -79,28 +70,23 @@
 
         const previousZoom = Number(localStorage.getItem("zoom"));
         const currentIframeZoom = reactive(Number.isNaN(previousZoom) ? 90 : previousZoom, newZoom => {
-            document.getElementById("echo-container").style.zoom = `${newZoom}%`;
-            const zoomRange = document.getElementById("zoom-range");
-            if (zoomRange) zoomRange.value = newZoom;
+            document.getElementById("echo").zoom(newZoom);
         });
-        
+
         document.addEventListener('wheel', (e) => {
             if (!e.shiftKey) return;
-            
+
             e.preventDefault();
-            
+
             const direction = Math.sign(e.deltaY);
             const newValue = currentIframeZoom.value - direction * 5;
-            
+
             currentIframeZoom.value = Math.min(maxZoom, Math.max(minZoom, newValue));
         }, { passive: false });
-        
+
         currentIframeZoom.addListener(zoom => {
             localStorage.setItem("zoom", zoom);
         });
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.js"></script>
-    <script src="/echo/index.js"></script>
-    <script src="./index.js"></script>
 </body>
 </html>
