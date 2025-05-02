@@ -18,6 +18,6 @@ app.listen(5500, (err) => {
    
     console.log("\nRoutes:" +
         `\n${url}/mimic` +
-        `\n${url}/watcher`
+        `\n${url}/recorder`
     );
 });
