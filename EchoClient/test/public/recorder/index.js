@@ -29,7 +29,8 @@ async function start() {
         }
 
     } catch (err) {
-        console.log({err});
+        echoRecorder.cancel();
+        throw err;
     }
 };
 
