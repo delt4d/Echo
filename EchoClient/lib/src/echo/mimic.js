@@ -125,6 +125,12 @@ customElements.define("echo-mimic", EchoMimicComponent);
 
 export class EchoMimic
 {
+    /** @type {EchoData[]} */
+    #queue = [];
+
+    /** @type {boolean} */
+    #processing = false;
+    
     /**
      * @type {EchoMimicComponent}
      */
@@ -140,6 +146,29 @@ export class EchoMimic
 
     static waitAsync(time) {
         return new Promise(r => setTimeout(r, time));
+    }
+
+    /**
+     * Enqueue an EchoData instance to be executed in order.
+     * @param {EchoData} echoData
+     */
+    async enqueueAsync(echoData) {
+        this.#queue.push(echoData);
+        
+        if (!this.#processing) {
+            await this.#processQueue();
+        }
+    }
+
+    async #processQueue() {
+        this.#processing = true;
+
+        while (this.#queue.length > 0) {
+            const next = this.#queue.shift();
+            await this.executeAsync(next);
+        }
+
+        this.#processing = false;
     }
 
     /**

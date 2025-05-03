@@ -14,31 +14,12 @@ async function start() {
     await connection.start();
     console.log("SignalR Connected.");
 
-    let processing = false;
-
     const echoMimic = new EchoMimic(document.getElementById("echo"));
-    const queue = [];
-    const processNext = async (ignoreProcessing = false) => {
-        if (processing && !ignoreProcessing) return;
-        processing = true;
-        
-        const item = queue.shift();
-        
-        if (!item) {
-            processing = false;
-            return;
-        }
-
-        await echoMimic.executeAsync(EchoData.fromJson(item));
-
-        return await processNext(true);
-    }
 
     connection.stream("SendStream")
         .subscribe({
             async next(data) {
-                queue.push(data);
-                await processNext();
+                await echoMimic.enqueueAsync(EchoData.fromJson(data));
             },
             error(err) {
                 console.log(err);
