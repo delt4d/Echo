@@ -3,9 +3,66 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoLib", "EchoLib\EchoLib.csproj", "{B72CDDEB-9977-317B-DF70-D3F788571731}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Preview", "Preview", "{C3414E70-D0B4-FFF3-C75F-7EAD4D7CF27B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoServer", "EchoServer\EchoServer.csproj", "{CC310C2A-47F3-BBB3-0FA5-B7BB4A342851}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{1E98B079-47EA-E13F-7D8D-58FC2A40ED44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoServer", "Preview\Server\EchoServer.csproj", "{5DA60E97-D768-4A66-AFFC-89022FC5E03A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{3A8DF596-E814-FECC-DD4B-D8EF8AAC1A0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{7FC56B99-861D-49E5-428D-4582CD8DD1D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoLib", "Lib\Server\EchoLib.csproj", "{72B48F7F-4748-4F35-9A6E-E9C44A380378}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{94AACFA9-D7DC-475A-8FC4-F72F4FD57FEB}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\Client\package.json = Lib\Client\package.json
+		Lib\Client\package-lock.json = Lib\Client\package-lock.json
+		Lib\Client\rmdir.js = Lib\Client\rmdir.js
+		Lib\Client\rollup.config.js = Lib\Client\rollup.config.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A09230AB-889C-48FB-937B-8F1AEA5C8CCC}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\Client\src\index.js = Lib\Client\src\index.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "echo", "echo", "{EEB50A90-4954-4B50-B2D3-293BF88058A2}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\Client\src\echo\data.js = Lib\Client\src\echo\data.js
+		Lib\Client\src\echo\event-bus.js = Lib\Client\src\echo\event-bus.js
+		Lib\Client\src\echo\handler.js = Lib\Client\src\echo\handler.js
+		Lib\Client\src\echo\handlers.js = Lib\Client\src\echo\handlers.js
+		Lib\Client\src\echo\mimic.js = Lib\Client\src\echo\mimic.js
+		Lib\Client\src\echo\recorder.js = Lib\Client\src\echo\recorder.js
+		Lib\Client\src\echo\types.js = Lib\Client\src\echo\types.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{92EF50EC-E499-4A8C-8FB6-577FCF34C696}"
+	ProjectSection(SolutionItems) = preProject
+		Preview\Client\package.json = Preview\Client\package.json
+		Preview\Client\package-lock.json = Preview\Client\package-lock.json
+		Preview\Client\main.js = Preview\Client\main.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "public", "public", "{33EE9734-3BFA-466B-8CE4-BE1E7729D66A}"
+	ProjectSection(SolutionItems) = preProject
+		Preview\Client\public\index.html = Preview\Client\public\index.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mimic", "mimic", "{0635A69B-4B3F-4FD7-9FA6-C93AEAC0B576}"
+	ProjectSection(SolutionItems) = preProject
+		Preview\Client\public\mimic\index.js = Preview\Client\public\mimic\index.js
+		Preview\Client\public\mimic\index.html = Preview\Client\public\mimic\index.html
+		Preview\Client\public\mimic\index-raw.html = Preview\Client\public\mimic\index-raw.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "recorder", "recorder", "{A35EA0D6-AEE6-4625-9EC6-D3BC3FAB1FA7}"
+	ProjectSection(SolutionItems) = preProject
+		Preview\Client\public\recorder\index.html = Preview\Client\public\recorder\index.html
+		Preview\Client\public\recorder\index.js = Preview\Client\public\recorder\index.js
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,33 +74,46 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B72CDDEB-9977-317B-DF70-D3F788571731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B72CDDEB-9977-317B-DF70-D3F788571731}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B72CDDEB-9977-317B-DF70-D3F788571731}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{B72CDDEB-9977-317B-DF70-D3F788571731}.Debug|x64.Build.0 = Debug|Any CPU
-		{B72CDDEB-9977-317B-DF70-D3F788571731}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B72CDDEB-9977-317B-DF70-D3F788571731}.Debug|x86.Build.0 = Debug|Any CPU
-		{B72CDDEB-9977-317B-DF70-D3F788571731}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B72CDDEB-9977-317B-DF70-D3F788571731}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B72CDDEB-9977-317B-DF70-D3F788571731}.Release|x64.ActiveCfg = Release|Any CPU
-		{B72CDDEB-9977-317B-DF70-D3F788571731}.Release|x64.Build.0 = Release|Any CPU
-		{B72CDDEB-9977-317B-DF70-D3F788571731}.Release|x86.ActiveCfg = Release|Any CPU
-		{B72CDDEB-9977-317B-DF70-D3F788571731}.Release|x86.Build.0 = Release|Any CPU
-		{CC310C2A-47F3-BBB3-0FA5-B7BB4A342851}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CC310C2A-47F3-BBB3-0FA5-B7BB4A342851}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CC310C2A-47F3-BBB3-0FA5-B7BB4A342851}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{CC310C2A-47F3-BBB3-0FA5-B7BB4A342851}.Debug|x64.Build.0 = Debug|Any CPU
-		{CC310C2A-47F3-BBB3-0FA5-B7BB4A342851}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{CC310C2A-47F3-BBB3-0FA5-B7BB4A342851}.Debug|x86.Build.0 = Debug|Any CPU
-		{CC310C2A-47F3-BBB3-0FA5-B7BB4A342851}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CC310C2A-47F3-BBB3-0FA5-B7BB4A342851}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CC310C2A-47F3-BBB3-0FA5-B7BB4A342851}.Release|x64.ActiveCfg = Release|Any CPU
-		{CC310C2A-47F3-BBB3-0FA5-B7BB4A342851}.Release|x64.Build.0 = Release|Any CPU
-		{CC310C2A-47F3-BBB3-0FA5-B7BB4A342851}.Release|x86.ActiveCfg = Release|Any CPU
-		{CC310C2A-47F3-BBB3-0FA5-B7BB4A342851}.Release|x86.Build.0 = Release|Any CPU
+		{5DA60E97-D768-4A66-AFFC-89022FC5E03A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DA60E97-D768-4A66-AFFC-89022FC5E03A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DA60E97-D768-4A66-AFFC-89022FC5E03A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5DA60E97-D768-4A66-AFFC-89022FC5E03A}.Debug|x64.Build.0 = Debug|Any CPU
+		{5DA60E97-D768-4A66-AFFC-89022FC5E03A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5DA60E97-D768-4A66-AFFC-89022FC5E03A}.Debug|x86.Build.0 = Debug|Any CPU
+		{5DA60E97-D768-4A66-AFFC-89022FC5E03A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DA60E97-D768-4A66-AFFC-89022FC5E03A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DA60E97-D768-4A66-AFFC-89022FC5E03A}.Release|x64.ActiveCfg = Release|Any CPU
+		{5DA60E97-D768-4A66-AFFC-89022FC5E03A}.Release|x64.Build.0 = Release|Any CPU
+		{5DA60E97-D768-4A66-AFFC-89022FC5E03A}.Release|x86.ActiveCfg = Release|Any CPU
+		{5DA60E97-D768-4A66-AFFC-89022FC5E03A}.Release|x86.Build.0 = Release|Any CPU
+		{72B48F7F-4748-4F35-9A6E-E9C44A380378}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72B48F7F-4748-4F35-9A6E-E9C44A380378}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72B48F7F-4748-4F35-9A6E-E9C44A380378}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{72B48F7F-4748-4F35-9A6E-E9C44A380378}.Debug|x64.Build.0 = Debug|Any CPU
+		{72B48F7F-4748-4F35-9A6E-E9C44A380378}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{72B48F7F-4748-4F35-9A6E-E9C44A380378}.Debug|x86.Build.0 = Debug|Any CPU
+		{72B48F7F-4748-4F35-9A6E-E9C44A380378}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72B48F7F-4748-4F35-9A6E-E9C44A380378}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72B48F7F-4748-4F35-9A6E-E9C44A380378}.Release|x64.ActiveCfg = Release|Any CPU
+		{72B48F7F-4748-4F35-9A6E-E9C44A380378}.Release|x64.Build.0 = Release|Any CPU
+		{72B48F7F-4748-4F35-9A6E-E9C44A380378}.Release|x86.ActiveCfg = Release|Any CPU
+		{72B48F7F-4748-4F35-9A6E-E9C44A380378}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1E98B079-47EA-E13F-7D8D-58FC2A40ED44} = {C3414E70-D0B4-FFF3-C75F-7EAD4D7CF27B}
+		{5DA60E97-D768-4A66-AFFC-89022FC5E03A} = {1E98B079-47EA-E13F-7D8D-58FC2A40ED44}
+		{7FC56B99-861D-49E5-428D-4582CD8DD1D5} = {3A8DF596-E814-FECC-DD4B-D8EF8AAC1A0D}
+		{72B48F7F-4748-4F35-9A6E-E9C44A380378} = {7FC56B99-861D-49E5-428D-4582CD8DD1D5}
+		{94AACFA9-D7DC-475A-8FC4-F72F4FD57FEB} = {3A8DF596-E814-FECC-DD4B-D8EF8AAC1A0D}
+		{A09230AB-889C-48FB-937B-8F1AEA5C8CCC} = {94AACFA9-D7DC-475A-8FC4-F72F4FD57FEB}
+		{EEB50A90-4954-4B50-B2D3-293BF88058A2} = {A09230AB-889C-48FB-937B-8F1AEA5C8CCC}
+		{92EF50EC-E499-4A8C-8FB6-577FCF34C696} = {C3414E70-D0B4-FFF3-C75F-7EAD4D7CF27B}
+		{33EE9734-3BFA-466B-8CE4-BE1E7729D66A} = {92EF50EC-E499-4A8C-8FB6-577FCF34C696}
+		{0635A69B-4B3F-4FD7-9FA6-C93AEAC0B576} = {33EE9734-3BFA-466B-8CE4-BE1E7729D66A}
+		{A35EA0D6-AEE6-4625-9EC6-D3BC3FAB1FA7} = {33EE9734-3BFA-466B-8CE4-BE1E7729D66A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0633600B-7F24-4654-9165-3F05ECE156EC}

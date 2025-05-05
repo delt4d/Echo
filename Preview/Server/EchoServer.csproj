@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EchoLib\EchoLib.csproj" />
+    <ProjectReference Include="..\..\Lib\Server\EchoLib.csproj" />
   </ItemGroup>
 
 </Project>

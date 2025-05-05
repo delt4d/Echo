@@ -1,5 +1,3 @@
-import {EchoEventBus} from "./event-bus.js";
-
 export class Handler {
     #type;
     #started = false;
@@ -25,11 +23,11 @@ export class Handler {
         return this.#eventBus;
     }
 
-    _emit(content, stringfy = false) {
+    _emit(content, stringify = false) {
         if (content && content === this.#lastContent)
             return;
 
-        if (stringfy)
+        if (stringify)
             content = JSON.stringify(content)
 
         if (this.#onEvent) {
