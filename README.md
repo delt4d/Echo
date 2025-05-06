@@ -5,10 +5,14 @@ It consists of client-side code to capture user interactions in real-time, and s
 
 ```
 Echo/
+├── Docs/               # Images and documents to be used by README
 ├── Echo.run/           # Runtime configuration files (e.g., launch profiles)
 ├── Lib/                # Shared client and server libraries
 ├── Preview/            # Server and client for preview of recording and mimic
 ├── .gitignore          # Files and folders to ignore in version control
+├── Back.Dockerfile     # Docker configuration to the preview server
+├── Front.Dockerfile    # Docker configuration to the preview client
+├── docker-compose.yml  # Configuration to run both containers 
 └── echo.sln            # .NET solution file
 ```
 
@@ -74,8 +78,8 @@ npm run start
 
 ## Preview
 Ensure both the server and client preview applications are running.
-Open http://localhost:5500/recorder and perform actions like moving the mouse or typing.
-Then navigate to http://localhost:5500/mimic to watch your session replayed inside an iframe.
+Open [`http://localhost:5500/recorder`](http://localhost:5500/recorder) and perform actions like moving the mouse or typing.
+Then navigate to [`http://localhost:5500/mimic`](http://localhost:5500/mimic) to watch your session replayed inside an iframe.
 
 ![Preview.gif](Docs/Preview.gif)
 
