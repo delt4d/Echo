@@ -1,0 +1,15 @@
+﻿services:
+  server:
+    build:
+      context: .
+      dockerfile: Back.Dockerfile
+    container_name: server
+    ports:
+      - "5063:8080"
+  client:
+    build:
+      context: .
+      dockerfile: Front.Dockerfile
+    container_name: client
+    ports:
+      - "5500:5500"

@@ -1,5 +1,4 @@
 using EchoServer;
-using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -25,3 +24,4 @@ app.UseCors("cors");
 app.MapHub<BrowserHub>("/hub").AllowAnonymous();
 app.UseHttpsRedirection();
 app.Run();
+

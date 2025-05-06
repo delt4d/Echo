@@ -10,6 +10,7 @@ public class BrowserHub : Hub
     {
         var workingDirectory = Environment.CurrentDirectory; // (i.e. \bin\Debug)
         var projectDirectory = Directory.GetParent(workingDirectory)?.Parent?.Parent ?? throw new DirectoryNotFoundException();
+        Console.WriteLine(projectDirectory.FullName);
         return projectDirectory.FullName;
     }
     
