@@ -77,6 +77,8 @@ Ensure both the server and client preview applications are running.
 Open http://localhost:5500/recorder and perform actions like moving the mouse or typing.
 Then navigate to http://localhost:5500/mimic to watch your session replayed inside an iframe.
 
+![Preview.gif](Docs/Preview.gif)
+
 ## Usage
 Build the client library, move `dist/` contents to the website folder and reference it in a script tag.
 ```html
