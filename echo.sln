@@ -55,7 +55,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mimic", "mimic", "{0635A69B
 	ProjectSection(SolutionItems) = preProject
 		Preview\Client\public\mimic\index.js = Preview\Client\public\mimic\index.js
 		Preview\Client\public\mimic\index.html = Preview\Client\public\mimic\index.html
-		Preview\Client\public\mimic\index-raw.html = Preview\Client\public\mimic\index-raw.html
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "recorder", "recorder", "{A35EA0D6-AEE6-4625-9EC6-D3BC3FAB1FA7}"

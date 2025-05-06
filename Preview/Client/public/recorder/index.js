@@ -24,7 +24,6 @@ async function start() {
         
         for await (const echoData of echoRecorder.getChangesAsync()) {
             const data = echoData.toJson();
-            console.log(data.type, data.time_elapsed, {data});
             subject.next(data);
         }
 

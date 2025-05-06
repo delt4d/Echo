@@ -1,7 +1,10 @@
 export class EchoData
 {
+    /** @type {string} */
     #type;
+    /** @type {string} */
     #content;
+    /** @type {number} */
     #timeElapsed;
     
     constructor(type, content, timeElapsed) {
