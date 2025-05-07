@@ -5,7 +5,8 @@ public enum ActionType
     PageChanges,
     Input,
     MouseMove,
-    MouseClick,
+    MouseUp,
+    MouseDown,
     PageResize,
     Scroll
 }

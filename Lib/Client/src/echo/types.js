@@ -2,7 +2,8 @@ export const EchoTypes = Object.freeze({
     pageChanges: "PageChanges",
     input: "Input",
     mouseMove: "MouseMove",
-    mouseClick: "MouseClick",
+    mouseDown: "MouseDown",
+    mouseUp: "MouseUp",
     pageResize: "PageResize",
     scroll: "Scroll"
 });

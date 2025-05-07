@@ -1,10 +1,10 @@
 import {
-    PageChangeHandler, 
-    InputHandler, 
-    MouseMoveHandler, 
-    MouseClickHandler, 
-    PageResizeHandler, 
-    ScrollHandler
+    PageChangeHandler,
+    InputHandler,
+    MouseMoveHandler,
+    MouseClickHandler,
+    PageResizeHandler,
+    ScrollHandler, MouseUpHandler, MouseDownHandler
 } from "./handlers";
 import {EchoData} from "./data";
 import {EchoEventBus} from "./event-bus.js";
@@ -34,8 +34,9 @@ export class EchoRecorder {
         if (opt.useDefaultHandlers) {
             this.addHandler(PageChangeHandler)
                 .addHandler(InputHandler)   
-                .addHandler(MouseMoveHandler)   
-                .addHandler(MouseClickHandler)  
+                .addHandler(MouseMoveHandler)
+                .addHandler(MouseUpHandler)
+                .addHandler(MouseDownHandler)
                 .addHandler(PageResizeHandler)  
                 .addHandler(ScrollHandler);
         }

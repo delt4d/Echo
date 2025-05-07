@@ -117,23 +117,27 @@ export class MouseMoveHandler extends Handler {
     }
 }
 
-
-export class MouseClickHandler extends Handler {
+export class MouseUpHandler extends Handler {
     constructor() {
-        const onClick = (e) => {
-            const content = {
-                button: e.button,
-                x: e.clientX,
-                y: e.clientY,
-                xpath: Handler.createXPathFromElement(e.target)
-            };
-            super._emit(content, true);
-        };
+        const onMouseUp = (e) => {
+            super._emit({}, true);
+        }
+        
+        const onStart = () => document.addEventListener("mouseup", onMouseUp);
+        const onStop = () => document.removeEventListener("mouseup", onMouseUp);
+        super(EchoTypes.mouseUp, onStart, onStop);
+    }
+}
 
-        const onStart = () => document.addEventListener("click", onClick);
-        const onStop = () => document.removeEventListener("click", onClick);
+export class MouseDownHandler extends Handler {
+    constructor() {
+        const onMouseDown = (e) => {
+            super._emit({}, true);
+        }
 
-        super(EchoTypes.mouseClick, onStart, onStop);
+        const onStart = () => document.addEventListener("mousedown", onMouseDown);
+        const onStop = () => document.removeEventListener("mousedown", onMouseDown);
+        super(EchoTypes.mouseDown, onStart, onStop);
     }
 }
 

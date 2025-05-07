@@ -31,6 +31,6 @@ async function start() {
         echoRecorder.cancel();
         throw err;
     }
-};
+}
 
-start()
+start();

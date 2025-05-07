@@ -2,9 +2,6 @@ import {Handler} from "./handler";
 import {EchoTypes} from "./types";
 
 class EchoMimicComponent extends HTMLElement {
-    #componentWindow = this.contentWindow;
-    #componentDocument = this.contentDocument || this.document;
-    
     constructor() {
         super();
     }
@@ -23,6 +20,16 @@ class EchoMimicComponent extends HTMLElement {
         cursor.style.left = `${posX}px`;
         cursor.style.top = `${posY}px`;
         cursor.style.display = "initial";
+    }
+    
+    cursorDown() {
+        const cursor = this.shadowRoot.querySelector(".cursor");
+        cursor.classList.add("down");
+    }
+    
+    cursorUp() {
+        const cursor = this.shadowRoot.querySelector(".cursor");
+        cursor.classList.remove("down");
     }
     
     get #iframeComponentWindow() {
@@ -102,6 +109,10 @@ class EchoMimicComponent extends HTMLElement {
                     display: none;
                     transition: top 0.05s linear, left 0.05s linear;
                     transform: translate(-50%, -50%);
+                }
+                
+                .cursor.down {
+                    background: blue;
                 }
             </style>
         </header>`;
@@ -186,6 +197,23 @@ export class EchoMimic
                 break;
             }
 
+            case EchoTypes.input: {
+                const { xpath, value } = JSON.parse(echoData.content);
+                const el = this.#echoComponent.lookupElementByXPath(xpath);
+                if (el) el.value = value;
+                break;
+            }
+            
+            case EchoTypes.mouseUp: {
+                this.#echoComponent.cursorUp();
+                break;
+            }
+
+            case EchoTypes.mouseDown: {
+                this.#echoComponent.cursorDown();
+                break;
+            }
+
             case EchoTypes.mouseMove: {
                 const { clientX, clientY } = JSON.parse(echoData.content);
                 this.#echoComponent.moveCursor(clientX, clientY);
@@ -195,13 +223,6 @@ export class EchoMimic
             case EchoTypes.pageResize: {
                 const { width, height } = JSON.parse(echoData.content);
                 this.#echoComponent.resize(width, height);
-                break;
-            }
-
-            case EchoTypes.input: {
-                const { xpath, value } = JSON.parse(echoData.content);
-                const el = this.#echoComponent.lookupElementByXPath(xpath);
-                if (el) el.value = value;
                 break;
             }
 
