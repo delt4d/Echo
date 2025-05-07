@@ -8,27 +8,29 @@ public class BrowserHub : Hub
 {
     private static string GetTestDataDirectoryLocation()
     {
-        var workingDirectory = Environment.CurrentDirectory; // (i.e. \bin\Debug)
-        var projectDirectory = Directory.GetParent(workingDirectory)?.Parent?.Parent ?? throw new DirectoryNotFoundException();
+        var workingDirectory = Environment.CurrentDirectory;
+        var projectDirectory = Directory.GetParent(workingDirectory) ?? throw new DirectoryNotFoundException();
         Console.WriteLine(projectDirectory.FullName);
         return projectDirectory.FullName;
     }
+
+    private static readonly string TestDataLocation = GetTestDataDirectoryLocation();
     
     public async Task ReceiveStream(ChannelReader<EchoData> stream)
     {
-        File.Delete(Path.Join(GetTestDataDirectoryLocation(), "TestData.txt"));
+        File.Delete(Path.Join(TestDataLocation, "TestData.txt"));
         
         await EchoRecorder.HandleChannelReader(stream, 
             (data) => new EchoSaveDataToFileCommand
                 {
                     Data = data,
-                    Directory = GetTestDataDirectoryLocation(),
+                    Directory = TestDataLocation,
                     Filename = "TestData.txt"
                 });
     }
 
     public IAsyncEnumerable<EchoData> SendStream(CancellationToken cancellationToken)
     {
-        return EchoMimic.GetDataFromFileAsync(GetTestDataDirectoryLocation(), "TestData.txt", cancellationToken);
+        return EchoMimic.GetDataFromFileAsync(TestDataLocation, "TestData.txt", cancellationToken);
     }
 }

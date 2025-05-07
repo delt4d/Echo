@@ -39,30 +39,9 @@ public static class EchoMimic
             if (string.IsNullOrWhiteSpace(line))
                 continue;
 
-            EchoData data;
-
-            try
-            {
-                var decompressed = DecompressFromBase64(line);
-                data = JsonConvert.DeserializeObject<EchoData>(decompressed);
-            }
-            catch (JsonException)
-            {
-                Console.WriteLine($"Unable to deserialize.");
-                throw;
-            }
+            var data = EchoData.FromString(line);
             
             yield return data;
         }
-    }
-    
-    private static string DecompressFromBase64(string base64)
-    {
-        var compressedBytes = Convert.FromBase64String(base64);
-        using var input = new MemoryStream(compressedBytes);
-        using var gzip = new GZipStream(input, CompressionMode.Decompress);
-        using var output = new MemoryStream();
-        gzip.CopyTo(output);
-        return Encoding.UTF8.GetString(output.ToArray());
     }
 }

@@ -1,6 +1,4 @@
-using System.IO.Compression;
 using System.Text;
-using Newtonsoft.Json;
 
 namespace EchoLib;
 
@@ -30,9 +28,7 @@ public class EchoSaveToStreamCommand() : IEchoCommand
 
     public async Task ExecuteAsync()
     {
-        var json = JsonConvert.SerializeObject(Data, Formatting.None);
-        var json64 = json.CompressToBase64();
-        var line = json64 + Environment.NewLine;
+        var line = Data + Environment.NewLine;
         var bytes = Encoding.UTF8.GetBytes(line);
         await _outStream.WriteAsync(bytes);
         await _outStream.FlushAsync();
@@ -58,9 +54,7 @@ public class EchoSaveDataToFileCommand() : IEchoCommand
             System.IO.Directory.CreateDirectory(Directory);
 
         var filePath = Path.Combine(Directory, Filename);
-        var json = JsonConvert.SerializeObject(Data);
-        var json64 = json.CompressToBase64();
-        var line = json64 + Environment.NewLine;
+        var line = Data + Environment.NewLine;
 
         await File.AppendAllTextAsync(filePath, line, Encoding.UTF8);
 
