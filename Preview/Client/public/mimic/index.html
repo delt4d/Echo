@@ -3,35 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mimic...</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        html,
-        body,
-        section {
-            height: 100%;
-        }
-
-        body {
-            background: linear-gradient(135deg, #23232c, #2c3e50, #283b52);
-        }
-
-        section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #echo {
-            box-shadow: 0 12px 64px rgba(0, 0, 0, 0.45);
-            border: rgba(255,255,255,.85) 1px solid;
-            border-radius: 2px;
-        }
-    </style>
+    <title>Mimic</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <section>
@@ -39,53 +12,8 @@
     </section>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.js"></script>
+    <script src="../websocket.js"></script>
     <script src="/echo/index.js"></script>
     <script src="./index.js"></script>
-    <script>
-        const minZoom = 32;
-        const maxZoom = 150;
-        const reactive = (defaultValue, ...listeners) => {
-            let currentValue = defaultValue;
-
-            const triggerListeners = (newValue = currentValue) => {
-                listeners.forEach(listener => listener(newValue));
-            }
-
-            triggerListeners(defaultValue);
-
-            return {
-                addListener(cb) {
-                    listeners.push(cb);
-                },
-                get value() {
-                    return currentValue;
-                },
-                set value(newValue) {
-                    currentValue = newValue;
-                    triggerListeners(newValue);
-                }
-            }
-        }
-
-        const previousZoom = Number(localStorage.getItem("zoom"));
-        const currentIframeZoom = reactive(Number.isNaN(previousZoom) ? 90 : previousZoom, newZoom => {
-            document.getElementById("echo").zoom(newZoom);
-        });
-
-        document.addEventListener('wheel', (e) => {
-            if (!e.shiftKey) return;
-
-            e.preventDefault();
-
-            const direction = Math.sign(e.deltaY);
-            const newValue = currentIframeZoom.value - direction * 5;
-
-            currentIframeZoom.value = Math.min(maxZoom, Math.max(minZoom, newValue));
-        }, { passive: false });
-
-        currentIframeZoom.addListener(zoom => {
-            localStorage.setItem("zoom", zoom);
-        });
-    </script>
 </body>
 </html>

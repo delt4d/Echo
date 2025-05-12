@@ -7,17 +7,20 @@ export class PageChangeHandler extends Handler {
      * @param {EchoEventBus} eventBus
      */
     constructor(eventBus) {
-        const observer = new MutationObserver((a,b) => {
+        const observer = new MutationObserver((a, b) => {
             const clone = document.documentElement.cloneNode(true);
-            
+
+            this.#injectDocumentStyles(clone);
+
             clone.querySelectorAll('input[type="password"]').forEach(input => Handler.maskInput(input.value));
-            clone.querySelectorAll('[data-no-record]').forEach(el => {
+            clone.querySelectorAll('[data-secured]').forEach(el => {
                 if ('value' in el) {
                     el.value = Handler.maskInput(el.value);
                 }
             });
             clone.querySelectorAll('script').forEach(script => script.remove());
-            
+            clone.querySelectorAll('link[rel="stylesheet"]').forEach(link => link.remove());
+            console.log(clone.outerHTML)
             super._emit(clone.outerHTML);
             eventBus?.emit("page-snapshot-rendered");
         });
@@ -35,6 +38,22 @@ export class PageChangeHandler extends Handler {
 
         super(EchoTypes.pageChanges, onStart, onStop, eventBus);
     }
+    
+    #injectDocumentStyles(clone) {
+        const head = clone.querySelector("head");
+        
+        [...document.styleSheets].forEach(sheet => {
+            if (!sheet.cssRules) return;
+            
+            const css = [...sheet.cssRules].map(rule => rule.cssText).join(" ");
+
+            if (css) {
+                const styleEl = document.createElement("style");
+                styleEl.textContent = css;
+                head.appendChild(styleEl);
+            }
+        });
+    }
 }
 
 export class InputHandler extends Handler {
@@ -47,7 +66,7 @@ export class InputHandler extends Handler {
         const onInput = (e) => {
             if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") {
                 const content = {
-                    value: e.target.type === "password" || "noRecord" in e.target.dataset ? Handler.maskInput(e.target.value) : e.target.value,
+                    value: e.target.type === "password" || "secured" in e.target.dataset ? Handler.maskInput(e.target.value) : e.target.value,
                     xpath: Handler.createXPathFromElement(e.target)
                 };
                 super._emit(content, true);
@@ -61,7 +80,7 @@ export class InputHandler extends Handler {
                 if (!document.documentElement.contains(el)) continue;
                 
                 const content = {
-                    value: el.type === "password" || "noRecord" in el.dataset ? Handler.maskInput(el.value) : el.value,
+                    value: el.type === "password" || "secured" in el.dataset ? Handler.maskInput(el.value) : el.value,
                     xpath: Handler.createXPathFromElement(el)
                 };
                 

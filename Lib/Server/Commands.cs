@@ -7,7 +7,7 @@ public interface IEchoCommand
     public Task ExecuteAsync();
 }
 
-public class EchoSaveToStreamCommand() : IEchoCommand
+public sealed class EchoSaveToStreamCommand() : IEchoCommand
 {
     private Stream _outStream = Stream.Null;
     public required EchoData Data { get; set; }
@@ -35,7 +35,7 @@ public class EchoSaveToStreamCommand() : IEchoCommand
     }
 }
 
-public class EchoSaveDataToFileCommand() : IEchoCommand
+public sealed class EchoSaveDataToFileCommand() : IEchoCommand
 {
     public required EchoData Data { get; set; }
     public required string Directory { get; set; }

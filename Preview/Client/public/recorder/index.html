@@ -4,98 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recorder | Page Test</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.7;
-      background-color: #f4f6f9;
-      color: #333;
-      padding-top: 60px;
-    }
-
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background-color: #2c3e50;
-      color: white;
-      padding: 15px 20px;
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: bold;
-      z-index: 1000;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-
-    main {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    }
-
-    h1, h2, h3, h4 {
-      color: #2c3e50;
-    }
-
-    h1 {
-      margin-top: 1.2em;
-    }
-
-    h2 {
-      border-bottom: 2px solid #eee;
-      padding-bottom: 5px;
-      margin-top: 2em;
-    }
-
-    blockquote {
-      background: #ecf0f1;
-      border-left: 5px solid #2980b9;
-      margin: 1.5em 0;
-      padding: 15px 20px;
-      font-style: italic;
-      color: #555;
-    }
-
-    nav {
-      margin-top: 20px;
-    }
-
-    nav a {
-      margin-right: 15px;
-      text-decoration: none;
-      color: #3498db;
-      font-weight: bold;
-    }
-
-    footer {
-      text-align: center;
-      margin: 40px 0;
-      color: #999;
-    }
-
-    #generate-btn, #remove-btn {
-      padding: 10px 15px;
-      margin-right: 10px;
-      background-color: #3498db;
-      border: none;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-
-    #generate-btn:hover, #remove-btn:hover {
-      background-color: #2980b9;
-    }
-  </style>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
@@ -123,16 +32,16 @@
   
   <section>
     <div>
-      <label>Input Password</label>
-      <input type="password">
+      <label for="password">Input Password</label>
+      <input id="password" type="password">
     </div>
     
     <div>
-      <label>Input Text</label>
-      <input type="text">
+      <label for="text1">Input Text</label>
+      <input id="text1" type="text">
 
-      <label>2° Input Text (Secured)</label>
-      <input type="text" data-no-record>
+      <label for="text2">2° Input Text (Secured)</label>
+      <input id="text2" type="text" data-secured>
     </div>
   </section>
 
@@ -189,44 +98,13 @@
   <h2>Still Scrolling?</h2>
   <p>This section is here to help you test long scrolling behavior. Keep going!</p>
 
-  <script>
-    for (let i = 1; i <= 200; i++) {
-      const p = document.createElement('p');
-      p.textContent = "Scroll filler " + i + ": Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum efficitur justo sed sapien tincidunt, ut posuere orci lacinia.";
-      document.body.querySelector('main').appendChild(p);
-    }
-
-    const generateBtn = document.getElementById('generate-btn');
-    const removeBtn = document.getElementById('remove-btn');
-    const container = document.getElementById('content-container');
-
-    let count = 0;
-
-    generateBtn.addEventListener('click', () => {
-      const div = document.createElement('div');
-      div.className = 'generated-item';
-      div.style.padding = '10px';
-      div.style.margin = '10px 0';
-      div.style.backgroundColor = '#dff9fb';
-      div.style.border = '1px solid #7ed6df';
-      div.textContent = `Dynamically Generated Item ${++count}`;
-      container.appendChild(div);
-    });
-
-    removeBtn.addEventListener('click', () => {
-      if (container.lastElementChild) {
-        container.removeChild(container.lastElementChild);
-        count--;
-      }
-    });
-  </script>
-
   <footer>
     &copy; 2025 Scroll Test Corp. All rights reserved.
   </footer>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.js"></script>
+<script src="../websocket.js"></script>
 <script src="/echo/index.js"></script>
 <script src="./index.js"></script>
 </body>

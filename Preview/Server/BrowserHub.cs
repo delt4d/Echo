@@ -10,13 +10,17 @@ public class BrowserHub : Hub
     {
         var workingDirectory = Environment.CurrentDirectory;
         var projectDirectory = Directory.GetParent(workingDirectory) ?? throw new DirectoryNotFoundException();
-        Console.WriteLine(projectDirectory.FullName);
         return projectDirectory.FullName;
     }
 
     private static readonly string TestDataLocation = GetTestDataDirectoryLocation();
+
+    public BrowserHub()
+    {
+        Console.WriteLine(TestDataLocation);
+    }
     
-    public async Task ReceiveStream(ChannelReader<EchoData> stream)
+    public async Task Record(ChannelReader<EchoData> stream)
     {
         File.Delete(Path.Join(TestDataLocation, "TestData.txt"));
         
@@ -29,7 +33,7 @@ public class BrowserHub : Hub
                 });
     }
 
-    public IAsyncEnumerable<EchoData> SendStream(CancellationToken cancellationToken)
+    public IAsyncEnumerable<EchoData> Mimic(CancellationToken cancellationToken)
     {
         return EchoMimic.GetDataFromFileAsync(TestDataLocation, "TestData.txt", cancellationToken);
     }

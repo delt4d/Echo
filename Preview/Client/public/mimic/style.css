@@ -1,0 +1,26 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body,
+section {
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(135deg, #23232c, #2c3e50, #283b52);
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#echo {
+    box-shadow: 0 12px 64px rgba(0, 0, 0, 0.45);
+    border: rgba(255,255,255,.85) 1px solid;
+    border-radius: 2px;
+}

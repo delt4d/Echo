@@ -49,18 +49,22 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "public", "public", "{33EE9734-3BFA-466B-8CE4-BE1E7729D66A}"
 	ProjectSection(SolutionItems) = preProject
 		Preview\Client\public\index.html = Preview\Client\public\index.html
+		Preview\Client\public\websocket.js = Preview\Client\public\websocket.js
+		Preview\Client\public\style.css = Preview\Client\public\style.css
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mimic", "mimic", "{0635A69B-4B3F-4FD7-9FA6-C93AEAC0B576}"
 	ProjectSection(SolutionItems) = preProject
 		Preview\Client\public\mimic\index.js = Preview\Client\public\mimic\index.js
 		Preview\Client\public\mimic\index.html = Preview\Client\public\mimic\index.html
+		Preview\Client\public\mimic\style.css = Preview\Client\public\mimic\style.css
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "recorder", "recorder", "{A35EA0D6-AEE6-4625-9EC6-D3BC3FAB1FA7}"
 	ProjectSection(SolutionItems) = preProject
 		Preview\Client\public\recorder\index.html = Preview\Client\public\recorder\index.html
 		Preview\Client\public\recorder\index.js = Preview\Client\public\recorder\index.js
+		Preview\Client\public\recorder\style.css = Preview\Client\public\recorder\style.css
 	EndProjectSection
 EndProject
 Global
