@@ -24,3 +24,25 @@ section {
     border: rgba(255,255,255,.85) 1px solid;
     border-radius: 2px;
 }
+
+.player-container {
+    position: fixed;
+    height: 6px;
+    bottom: 25px;
+    left: 25px;
+    right: 25px;
+    background: #fff;
+    border-radius: 10px;
+}
+
+.player-container .cursor {
+    position: absolute;
+    top: 50%;
+    width: 25px;
+    height: 25px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 3px solid #fff;
+    background: #222;
+    cursor: grab;
+}

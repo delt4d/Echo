@@ -148,6 +148,12 @@ export class EchoMimic
     #echoComponent;
     
     /**
+     *
+     * @type {Set<(echoData: EchoData) => {}>}
+     */
+    #listeners = new Set();
+    
+    /**
      * 
      * @param {EchoMimicComponent} echoComponent
      */
@@ -155,10 +161,39 @@ export class EchoMimic
         this.#echoComponent = echoComponent;
     }
 
+    /**
+     *
+     * @param {(echoData: EchoData) => {}} listener
+     */
+    addListener(listener) {
+        this.#listeners.add(listener);
+        return this.removeListener.bind(this, listener);
+    }
+
+    /**
+     *
+     * @param {(echoData: EchoData) => {}} listener
+     */
+    removeListener(listener) {
+        this.#listeners.delete(listener);
+    }
+
+    /**
+     *
+     * @param {EchoData} echoData
+     */
+    #notifyListeners(echoData) {
+        this.#listeners.forEach(cb => cb(echoData));
+    }
+
     static waitAsync(time) {
         return new Promise(r => setTimeout(r, time));
     }
 
+    cancelQueueExecution() {
+        this.#queue = [];
+    }
+    
     /**
      * Enqueue an EchoData instance to be executed in order.
      * @param {EchoData} echoData
@@ -170,12 +205,13 @@ export class EchoMimic
             await this.#processQueue();
         }
     }
-
+    
     async #processQueue() {
         this.#processing = true;
 
         while (this.#queue.length > 0) {
             const next = this.#queue.shift();
+            await EchoMimic.waitAsync(next.timeElapsed);
             await this.executeAsync(next);
         }
 
@@ -188,9 +224,6 @@ export class EchoMimic
      * @returns {Promise<void>}
      */
     async executeAsync(echoData) {
-        // wait to execute
-        await EchoMimic.waitAsync(echoData.timeElapsed);
-
         switch(echoData.type) {
             case EchoTypes.pageChanges: {
                 this.#echoComponent.updateContent(echoData.content);
@@ -232,5 +265,7 @@ export class EchoMimic
                 break;
             }
         }
+
+        this.#notifyListeners(echoData);
     }
 }

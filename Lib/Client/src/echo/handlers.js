@@ -198,5 +198,7 @@ export class ScrollHandler extends Handler {
         const onStop = () => window.removeEventListener("scroll", onScroll);
 
         super(EchoTypes.scroll, onStart, onStop);
+        
+        onScroll();
     }
 }

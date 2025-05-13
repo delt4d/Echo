@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace EchoServer;
 
-public class BrowserHub : Hub
+public class EchoHub : Hub
 {
     private static string GetTestDataDirectoryLocation()
     {
@@ -15,7 +15,7 @@ public class BrowserHub : Hub
 
     private static readonly string TestDataLocation = GetTestDataDirectoryLocation();
 
-    public BrowserHub()
+    public EchoHub()
     {
         Console.WriteLine(TestDataLocation);
     }

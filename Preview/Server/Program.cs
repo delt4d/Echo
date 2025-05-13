@@ -21,7 +21,8 @@ builder.Services.AddCors(o =>
 
 var app = builder.Build();
 app.UseCors("cors");
-app.MapHub<BrowserHub>("/hub").AllowAnonymous();
+app.MapHub<EchoHub>("/hub").AllowAnonymous();
+app.MapControllers();
 app.UseHttpsRedirection();
 app.Run();
 
