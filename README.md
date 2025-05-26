@@ -1,5 +1,7 @@
 ﻿# Echo
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/delt4d/Echo)
+
 **Echo** is a session recording and replay system that enables the capture and visual reproduction of user interactions in websites.
 It consists of client-side code to capture user interactions in real-time, and server-side code to save and retrieve user interactions.
 
